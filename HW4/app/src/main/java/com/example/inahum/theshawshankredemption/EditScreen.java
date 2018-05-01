@@ -22,7 +22,7 @@ public class EditScreen extends AppCompatActivity {
     private EditText editText;
     private static final String TAG = "ListDataActivity";
     ListView listView;
-
+//
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
