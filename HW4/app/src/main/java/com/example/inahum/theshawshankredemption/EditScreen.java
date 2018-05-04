@@ -6,10 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,7 +20,7 @@ public class EditScreen extends AppCompatActivity {
     private EditText editText;
     private static final String TAG = "ListDataActivity";
     ListView listView;
-//
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,30 +34,34 @@ public class EditScreen extends AppCompatActivity {
         btnAdd.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                String description = editText.getText().toString();
-                if(editText.length() != 0){
-                    AddData("inbal", description);
+                String editTextInput = editText.getText().toString();
+                String[] parts = editTextInput.split(",");
+                String title = parts[0];
+                String description = parts[1];
+
+                if(editText.length() != 0 && title.length() != 0 && description.length() != 0){
+                    AddData(title, description);
                     populateListView();
                     editText.setText("");
                 } else{
-                    toastMessage("You must put something in the text field!");
+                    toastMessage("You must put something in the text field, in format: Title, description ");
                 }
             }
         });
-
     }
 
     private void populateListView(){
+
     Log.d(TAG, "populateListView: Dispalying data in the list view." );
         Cursor data = mDataBaseHelper.getData();
-        ArrayList<String> listData = new ArrayList<>();
+        ArrayList<Note> listNote = new ArrayList<>();
 
-        while(data.moveToNext()){ /****/
-            listData.add(data.getString(1) + data.getString(2));
+        while(data.moveToNext()){
+            listNote.add(new Note
+                    (data.getString(1),data.getString(2), data.getString(3)));
         }
 
-        ListAdapter adapter = new ArrayAdapter<>(this, R.layout.list_layout, R.id.textView, listData);
-        listView.setAdapter(adapter);
+        listView.setAdapter(new NoteListAdapter(this, listNote));
     }
 
     public void AddData(String title, String description){

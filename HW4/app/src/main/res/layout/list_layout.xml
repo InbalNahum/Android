@@ -1,27 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_centerInParent="true"
-        android:id="@+id/textView"
-        android:fontFamily="casual"
-        android:text="bla"
-        android:textSize="30sp"
-        android:textColor="#131212"
-        android:gravity="center"
+        android:layout_toLeftOf="@+id/status"
+        android:layout_alignParentTop="true"
+        android:text="title"
+        android:id="@+id/title"
+        android:gravity="left"
+        android:textSize="22sp"
+        android:textColor="#525252"
+        android:fontFamily="serif-monospace"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:layout_below="@+id/textView"
-        android:id="@+id/textView2"
-        android:fontFamily="casual"
-        android:text="this is decortion"
-        android:textSize="15sp"
-        android:textColor="#225aba"
-        android:gravity="center"
+        android:layout_toLeftOf="@+id/status"
+        android:id="@+id/description"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/title"
+        android:textColor="#929292"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="left"
+        android:text="description"
+        android:textSize="15sp" />
+
+    <TextView
+        android:scaleType="centerCrop"
+        android:text="status"
+        android:textColor="#212020"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="22sp"
+        android:id="@+id/status"
+        android:layout_alignParentRight="true"
+        android:layout_width="70dp"
+        android:layout_height="50dp" />
 </RelativeLayout>
