@@ -27,7 +27,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="The Formt: Title, Description"/>
+            android:hint="The format: Title, Description"/>
 
 
     </LinearLayout>

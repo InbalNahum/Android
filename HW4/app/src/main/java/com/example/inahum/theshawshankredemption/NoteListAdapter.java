@@ -16,21 +16,26 @@ import java.util.ArrayList;
 
 class NoteListAdapter extends ArrayAdapter<Note> {
     ArrayList<Note> notes;
+
     public NoteListAdapter(AppCompatActivity classApp, ArrayList<Note> notes) {
         super(classApp, R.layout.list_layout);
         this.notes = notes;
     }
 
     @Override
-    public int getCount(){ return notes.size(); }
+    public int getCount() {
+        return notes.size();
+    }
 
     @Override
-    public Note getItem(int i){ return notes.get(i); }
+    public Note getItem(int i) {
+        return notes.get(i);
+    }
 
     @Override
     public View getView(int position,
                         View recycledView,
-                        ViewGroup listView){
+                        ViewGroup listView) {
         if (recycledView == null) {
             recycledView = LayoutInflater.from(getContext())
                     .inflate(R.layout.list_layout, null);
@@ -40,7 +45,6 @@ class NoteListAdapter extends ArrayAdapter<Note> {
         TextView status = recycledView.findViewById(R.id.status);
 
         Note n = getItem(position);
-
         title.setText(n.title);
         description.setText(n.description);
         status.setText(n.status);

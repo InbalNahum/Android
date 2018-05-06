@@ -35,16 +35,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    
-    private void populateListView(){
 
-        Log.d(TAG, "populateListView: Dispalying data in the list view." );
+    private void populateListView() {
+
+        Log.d(TAG, "populateListView: Dispalying data in the list view.");
         Cursor data = mDataBaseHelper.getData();
         ArrayList<Note> listNote = new ArrayList<>();
 
-        while(data.moveToNext()){
+        while (data.moveToNext()) {
             listNote.add(new Note
-                    (data.getString(1),data.getString(2), data.getString(3)));
+                    (data.getString(1), data.getString(2), data.getString(3)));
         }
 
         listView.setAdapter(new NoteListAdapter(this, listNote));

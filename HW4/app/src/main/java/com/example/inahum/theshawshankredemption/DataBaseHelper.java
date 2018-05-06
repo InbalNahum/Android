@@ -28,9 +28,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String ACCEPT = "Accepted";
     private static int numOfNotes = 0;
 
-    public DataBaseHelper(Context contex){
+    public DataBaseHelper(Context contex) {
         super(contex, TABLE_NAME, null, 1);
     }
+
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
      /*String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -52,7 +53,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public boolean addData(String title, String description){
+    public boolean addData(String title, String description) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_ID, numOfNotes++);
@@ -65,17 +66,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String dateStr = format.format(date);
         contentValues.put(COL_ADD_DATE, dateStr);
 
-        Log.d(TAG, "addData: Adding " + description + " to "+ TABLE_NAME);
+        Log.d(TAG, "addData: Adding " + description + " to " + TABLE_NAME);
         long result = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
 
-        if(result == -1){
+        if (result == -1) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
 
-    public Cursor getData(){
+    public Cursor getData() {
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
@@ -84,4 +85,52 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor getItemId(String title) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String query = "SELECT " + COL_ID + " FROM " + TABLE_NAME +
+                " WHERE " + COL_TITLE + " = '" + title + "'";
+
+        Cursor data = sqLiteDatabase.rawQuery(query, null);
+        return data;
+    }
+
+    public void updateNote(int id, String newTitle, String oldTitle,
+                           String newDescription, String oldDescription) {
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        String queryTitle = "UPDATE " + TABLE_NAME + " SET " + COL_TITLE +
+                " = '" + newTitle + "' WHERE " + COL_ID + " = '" + id +
+                "' AND " + COL_TITLE + " = '" + oldTitle + "'";
+
+        String queryDecs = "UPDATE " + TABLE_NAME + " SET " + COL_DESCRIPTION +
+                " = '" + newDescription + "' WHERE " + COL_ID + " = '" + id +
+                "' AND " + COL_DESCRIPTION + " = '" + oldDescription + "'";
+
+        Log.d(TAG, "Update note: " + queryTitle + " " + queryDecs);
+        Log.d(TAG, "Set note: " + newTitle + " " + newDescription);
+
+        sqLiteDatabase.execSQL(queryTitle);
+        sqLiteDatabase.execSQL(queryDecs);
+    }
+
+    public void deleteNote(int id, String title) {
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + COL_ID +
+                " = '" + id + "' AND " + COL_TITLE + " = '" + title + "'";
+
+        Log.d(TAG, "Delete note: " + query + " " + title);
+        sqLiteDatabase.execSQL(query);
+    }
+
+    public void setStatus(int id) {
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL_STATUS +
+                " = '" + "Received" + "' WHERE " + COL_ID + " = '" + id + "'";
+
+        Log.d(TAG, "setStatus: " + query + "with id " + id);
+        sqLiteDatabase.execSQL(query);
+    }
 }
