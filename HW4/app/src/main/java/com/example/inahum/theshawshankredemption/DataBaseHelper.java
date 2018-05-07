@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,7 +24,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String COL_ADD_DATE = "Add_Date";
     private static final String TAG = "DatabaseHelper";
     private static final String SENT = "Sent";
-    private static final String ACCEPT = "Accepted";
+    private static final String RECEIVED = "Received";
     private static int numOfNotes = 0;
 
     public DataBaseHelper(Context contex) {
@@ -34,14 +33,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-     /*String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                           COL1 + " TEXT)";
-        sqLiteDatabase.execSQL(createTable);*/
-
         String createTable = "CREATE TABLE " + TABLE_NAME + " ("
                 + COL_ID + " INTEGER PRIMARY KEY, " + COL_TITLE +
                 " TEXT, " + COL_DESCRIPTION + " TEXT, " + COL_STATUS + " TEXT, "
-                + COL_ADD_DATE + " TEXT" + ")";
+                + COL_ADD_DATE + " INTEGER" + ")";
 
         sqLiteDatabase.execSQL(createTable);
     }
@@ -62,11 +57,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_STATUS, SENT);
 
         Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        String dateStr = format.format(date);
-        contentValues.put(COL_ADD_DATE, dateStr);
-
-        Log.d(TAG, "addData: Adding " + description + " to " + TABLE_NAME);
+        long currentTime = date.getTime();
+        contentValues.put(COL_ADD_DATE, currentTime);
+        Log.d(TAG, "add currentTime " + currentTime);
+        Log.d(TAG, "addDate: Adding " + date.toString() + " to " + TABLE_NAME);
+        Log.d(TAG, "addDate: String " + currentTime + " to " + TABLE_NAME);
         long result = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
 
         if (result == -1) {
@@ -124,13 +119,34 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(query);
     }
 
-    public void setStatus(int id) {
+    // return true when over two days
+    public boolean setStatus(int id) {
 
+        Cursor data = getData();
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        String query = "UPDATE " + TABLE_NAME + " SET " + COL_STATUS +
-                " = '" + "Received" + "' WHERE " + COL_ID + " = '" + id + "'";
+        while (data.moveToNext()) {
+            int currId = data.getInt(0);
+            if (id == currId) {
+                long addDate = data.getInt(4);
+                Date currentTime = Calendar.getInstance().getTime();
+                long timeTwo = currentTime.getTime();
+                long twoDays = 1000 * 60 * 60 * 24 * 2;
+                long diffDate = (timeTwo - addDate) / twoDays;
+                Log.d(TAG, "old " + addDate);
+                Log.d(TAG, "new " + timeTwo);
+                Log.d(TAG, "DiffDay " + diffDate);
+                if (diffDate >= 2) {
 
-        Log.d(TAG, "setStatus: " + query + "with id " + id);
-        sqLiteDatabase.execSQL(query);
+                    String query = "UPDATE " + TABLE_NAME + " SET " + COL_STATUS +
+                            " = '" + RECEIVED + "' WHERE " + COL_ID + " = '" + id + "'";
+
+                    Log.d(TAG, "setStatus: " + query + "with id " + id);
+                    sqLiteDatabase.execSQL(query);
+                    return true;
+
+                }
+            }
+        }
+        return false;
     }
 }

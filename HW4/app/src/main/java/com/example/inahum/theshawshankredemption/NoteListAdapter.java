@@ -1,5 +1,7 @@
 package com.example.inahum.theshawshankredemption;
 
+import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +17,14 @@ import java.util.ArrayList;
 
 
 class NoteListAdapter extends ArrayAdapter<Note> {
-    ArrayList<Note> notes;
+    private ArrayList<Note> notes;
+    private DataBaseHelper mDataBaseHelper;
+    private static final String TAG = "NoteListAdapter";
 
-    public NoteListAdapter(AppCompatActivity classApp, ArrayList<Note> notes) {
+    public NoteListAdapter(AppCompatActivity classApp, ArrayList<Note> notes, DataBaseHelper mDataBaseHelper) {
         super(classApp, R.layout.list_layout);
         this.notes = notes;
+        this.mDataBaseHelper = mDataBaseHelper;
     }
 
     @Override
@@ -44,10 +49,22 @@ class NoteListAdapter extends ArrayAdapter<Note> {
         TextView description = recycledView.findViewById(R.id.description);
         TextView status = recycledView.findViewById(R.id.status);
 
-        Note n = getItem(position);
-        title.setText(n.title);
-        description.setText(n.description);
-        status.setText(n.status);
+        Note note = getItem(position);
+        Cursor data = mDataBaseHelper.getItemId(note.title); //get id of item
+        int itemId = -1;
+        while (data.moveToNext()) {
+            itemId = data.getInt(0);
+        }
+        if (itemId > -1) {
+            boolean isChange = mDataBaseHelper.setStatus(itemId);
+            if (isChange == true) {
+                status.setBackgroundColor(Color.RED);
+            }
+        }
+
+        title.setText(note.title);
+        description.setText(note.description);
+        status.setText(note.status);
 
         return recycledView;
     }

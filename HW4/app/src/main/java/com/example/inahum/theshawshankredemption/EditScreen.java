@@ -64,7 +64,7 @@ public class EditScreen extends AppCompatActivity {
                     (data.getString(1), data.getString(2), data.getString(3)));
         }
 
-        listView.setAdapter(new NoteListAdapter(this, listNote));
+        listView.setAdapter(new NoteListAdapter(this, listNote, mDataBaseHelper));
 
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -73,17 +73,22 @@ public class EditScreen extends AppCompatActivity {
                 Log.d(TAG, "onItemClick: You clicked on " + note.title);
                 Cursor data = mDataBaseHelper.getItemId(note.title); //get id of item
                 int itemId = -1;
+                String status = "Sent";
                 while (data.moveToNext()) {
                     itemId = data.getInt(0);
+                    status = data.getString(3);
                 }
-                if (itemId > -1) {
+                if (itemId > -1 && status.equals("Sent")) {
                     Log.d(TAG, "onItemClick: The ID is: " + itemId);
                     Intent editScreenIntent = new Intent(EditScreen.this, EditDataActivity.class);
                     editScreenIntent.putExtra("id", itemId);
                     editScreenIntent.putExtra("title", note.title);
                     editScreenIntent.putExtra("description", note.description);
                     startActivity(editScreenIntent);
-                } else {
+                } else if (status.equals("Received")){
+                    toastMessage("The note received");
+                }else{
+
                     toastMessage("No ID aaaociated with that title");
                 }
             }
