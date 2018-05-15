@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             listNote.add(new Note
                     (data.getString(1), data.getString(2), data.getString(3)));
         }
-
+        data.close();
         listView.setAdapter(new NoteListAdapter(this, listNote, mDataBaseHelper));
     }
 
