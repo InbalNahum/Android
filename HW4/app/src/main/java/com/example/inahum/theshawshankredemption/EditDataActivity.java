@@ -19,7 +19,7 @@ public class EditDataActivity extends AppCompatActivity {
     private static final String TAG = "EditDataActivity";
 
     private Button btnSave, btnDelete;
-    private EditText editable_item;
+    private EditText editTitle, editDescription;
     private int selectId;
     private String selectTitle;
     private String selectDescription;
@@ -31,7 +31,8 @@ public class EditDataActivity extends AppCompatActivity {
         setContentView(R.layout.edit_data_layout);
         btnSave = findViewById(R.id.btnSave);
         btnDelete = findViewById(R.id.btnDelete);
-        editable_item = findViewById(R.id.editable_item);
+        editTitle = findViewById(R.id.editTitle);
+        editDescription = findViewById(R.id.editDescription);
         mDataBaseHelper = new DataBaseHelper(this);
 
         //get the intent extra from EditScreen
@@ -39,18 +40,17 @@ public class EditDataActivity extends AppCompatActivity {
         selectId = receiveIntent.getIntExtra("id", -1);
         selectTitle = receiveIntent.getStringExtra("title");
         selectDescription = receiveIntent.getStringExtra("description");
-        //set the text to show thr current selected item
-        editable_item.setText(selectTitle + ", " + selectDescription);
+        //set the text to show the current selected item
+        editTitle.setText(selectTitle);
+        editDescription.setText(selectDescription);
 
         btnSave.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                String item = editable_item.getText().toString();
-                String[] parts = item.split(",");
-                String title = parts[0];
-                String description = parts[1];
+                String title = editTitle.getText().toString();
+                String description = editDescription.getText().toString();
 
-                if (!item.equals("") && title.length() != 0 && description.length() != 0) {
+                if (title.length() != 0 && description.length() != 0) {
                     mDataBaseHelper.updateNote(selectId, title, selectTitle, description, selectDescription);
                     Intent editScreenIntent = new Intent(EditDataActivity.this, EditScreen.class);
                     startActivity(editScreenIntent);
@@ -67,7 +67,8 @@ public class EditDataActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 mDataBaseHelper.deleteNote(selectId, selectTitle);
-                editable_item.setText("");
+                editTitle.setText("");
+                editDescription.setText("");
                 Intent editScreenIntent = new Intent(EditDataActivity.this, EditScreen.class);
                 startActivity(editScreenIntent);
                 toastMessage("Remove from dataBase");
