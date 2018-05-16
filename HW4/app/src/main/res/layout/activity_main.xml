@@ -17,13 +17,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.3"
-            android:background="#c27a28"
-            android:text="Edit" />
+            android:background="#181717"
+            android:text="Edit"
+            android:textColor="#ffffff"
+            android:textSize="60dp"/>
     </LinearLayout>
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/background">
 
         </ListView>
 

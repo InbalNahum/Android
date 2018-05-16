@@ -11,7 +11,7 @@
         android:id="@+id/title"
         android:gravity="left"
         android:textSize="22sp"
-        android:textColor="#525252"
+        android:textColor="#ffffff"
         android:fontFamily="serif-monospace"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -24,7 +24,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/title"
-        android:textColor="#929292"
+        android:textColor="#ffffff"
         android:fontFamily="sans-serif-condensed"
         android:gravity="left"
         android:text="description"
@@ -32,14 +32,14 @@
 
     <TextView
         android:id="@+id/status"
-        android:layout_width="70dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:background="#fe0de27f"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center"
         android:scaleType="centerCrop"
-        android:text="status"
+        android:text="STATUS"
         android:textColor="#212020"
         android:textSize="22sp" />
 
