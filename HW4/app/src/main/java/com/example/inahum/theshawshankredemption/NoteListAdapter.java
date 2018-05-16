@@ -20,7 +20,7 @@ class NoteListAdapter extends ArrayAdapter<Note> {
     private ArrayList<Note> notes;
     private DataBaseHelper mDataBaseHelper;
     private static final String TAG = "NoteListAdapter";
-
+    private static final String RECEIVED = "Received";
     public NoteListAdapter(AppCompatActivity classApp, ArrayList<Note> notes, DataBaseHelper mDataBaseHelper) {
         super(classApp, R.layout.list_layout);
         this.notes = notes;
@@ -57,8 +57,9 @@ class NoteListAdapter extends ArrayAdapter<Note> {
         }
         if (itemId > -1) {
             boolean isChange = mDataBaseHelper.setStatus(itemId);
-            if (isChange == true) {
+            if (isChange == true ||  note.status.equals(RECEIVED) ) {
                 status.setBackgroundColor(Color.RED);
+                note.status = RECEIVED;
             }
         }
 

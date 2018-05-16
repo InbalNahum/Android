@@ -23,7 +23,6 @@ public class EditDataActivity extends AppCompatActivity {
     private int selectId;
     private String selectTitle;
     private String selectDescription;
-
     DataBaseHelper mDataBaseHelper;
 
     @Override
