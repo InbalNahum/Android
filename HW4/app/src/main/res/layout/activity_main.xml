@@ -14,11 +14,11 @@
 
         <Button
             android:id="@+id/btnAddEdit"
-            android:text="Edit"
-            android:background="#55bb77"
-            android:layout_weight="0.3"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:background="#c27a28"
+            android:text="Edit" />
     </LinearLayout>
         <ListView
             android:id="@+id/listView"
