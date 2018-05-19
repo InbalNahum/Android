@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.inahum.theshawshankredemption.EditScreen">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="#e0e0e0"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="0.3"
+            android:textSize="50dp"
+            android:background="#1d1e1c"
+            android:text="+"
+            android:textColor="#ffffff"/>
+
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:hint="The format: Title, Description" />
+
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/kotel">
+
+    </ListView>
+
+</LinearLayout>
