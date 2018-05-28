@@ -158,4 +158,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return false;
     }
+
+   public void setStatusByLocation(){
+
+       SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+       String query = "UPDATE " + TABLE_NAME + " SET " + COL_STATUS +
+               " = '" + RECEIVED;
+
+       Log.d(TAG, "setStatus received for all table");
+       sqLiteDatabase.execSQL(query);
+   }
 }

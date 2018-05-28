@@ -21,6 +21,7 @@ class NoteListAdapter extends ArrayAdapter<Note> {
     private DataBaseHelper mDataBaseHelper;
     private static final String TAG = "NoteListAdapter";
     private static final String RECEIVED = "Received";
+
     public NoteListAdapter(AppCompatActivity classApp, ArrayList<Note> notes, DataBaseHelper mDataBaseHelper) {
         super(classApp, R.layout.list_layout);
         this.notes = notes;
