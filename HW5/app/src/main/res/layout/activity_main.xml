@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.inahum.theshawshankredemption.MainActivity">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="#e0e0e0"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <Button
+            android:id="@+id/btnAddEdit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:background="#181717"
+            android:text="Edit"
+            android:textColor="#ffffff"
+            android:textSize="60dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="#e0e0e0"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+    <TextView
+        android:id="@+id/textLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Locatin"
+        app:layout_constraintVertical_bias="0.109"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="42dp" />
+    </LinearLayout>
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+
+
+</LinearLayout>
